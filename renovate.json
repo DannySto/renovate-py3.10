@@ -1,25 +1,26 @@
-
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
-    "enabledManagers": ["regex"],
-    "packageRules": [
-      {
-        "matchDatasources": ["docker"],
-        "matchUpdateTypes": ["digest"]
-      }
+  "config": {
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+      "mergeConfidence:all-badges",
+      "config:recommended"
     ],
+    "enabledManagers": [
+      "custom.regex"
+    ],
+    "packageRules": [],
     "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": ["^Jenkinsfile$"],
-      "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+version: \\'(?<currentValue>[^@\"]+)(@(?<currentDigest>sha256:[a-f0-9]+))?\""
-      ],
-      "autoReplaceStringTemplate": "s+version: {{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}\"",
-      "datasourceTemplate": "docker"
-    }
-  ]
+      {
+        "customType": "regex",
+        "fileMatch": [
+          "^Jenkinsfile$"
+        ],
+        "matchStrings": [
+          "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+version: \\'(?<currentValue>[^@\"]+)(@(?<currentDigest>sha256:[a-f0-9]+))?\""
+        ],
+        "autoReplaceStringTemplate": "s+version: {{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}\"",
+        "datasourceTemplate": "docker"
+      }
+    ]
+  }
 }
