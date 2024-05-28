@@ -4,21 +4,15 @@
     "config:recommended"
   ],
     "enabledManagers": ["regex"],
-    "packageRules": [
-      {
-        "matchDatasources": ["docker"],
-        "matchUpdateTypes": ["digest"]
-      }
-    ],
     "customManagers": [
     {
       "customType": "regex",
+      "datasourceTemplate": "docker",
       "fileMatch": ["^Jenkinsfile$"],
       "matchStrings": [
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+version: \\'(?<currentValue>[^@\"]+)(@(?<currentDigest>sha256:[a-f0-9]+))?\""
       ],
-      "autoReplaceStringTemplate": "s+version: {{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}\"",
-      "datasourceTemplate": "docker"
+      "autoReplaceStringTemplate": "s+version: {{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}\""
     }
   ]
 }
